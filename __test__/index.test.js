@@ -1,6 +1,6 @@
 import { getStandardScalar } from '../index'
-import { tensor, scaled } from './fixtures'
+import { matrix, scaled } from './fixtures'
 
 test('getStandardScalar', () => {
-  expect(getStandardScalar(tensor)).toStrictEqual(scaled)
+  expect(getStandardScalar(matrix)).toStrictEqual(scaled)
 })

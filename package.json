@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "standard ./index.js",
+    "lint:fix": "standard --fix ./index.js"
   },
   "keywords": [],
   "author": "",
