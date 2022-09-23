@@ -30,7 +30,7 @@ const rotateArrayCounter = _.memoize((matrix) =>
   )
 )
 
-export const getStandardScalar = _.memoize((matrix) =>
+export const getStandardScaler = _.memoize((matrix) =>
   rotateArrayCounter(
     _.times(_.size(rorateArray(matrix)), (row) =>
       getScaled(_.get(rorateArray(matrix), row))
