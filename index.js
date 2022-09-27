@@ -10,19 +10,19 @@ export const scale = _.memoize((ns) =>
   _.map(ns, (n) => _.divide(n - mean(ns), getStandardDeviation(ns)) || 0),
 )
 
-const rorateMatrix = _.memoize((x) =>
+const rorate = _.memoize((x) =>
   _.map(_.first(x), (_v, i) => _.reverse(_.map(x, (r) => r[i]))),
 )
 
-const rotateMatrixCounter = _.memoize((x) =>
+const rotateCounter = _.memoize((x) =>
   _.map(_.first(x), (_v, i) => _.map(x, (r) => r[_.size(r) - 1 - i])),
 )
 
-const getShape = _.memoize((x) => [_.size(x), _.size(rorateMatrix(x))])
+const getShape = _.memoize((x) => [_.size(x), _.size(rorate(x))])
 
 const getScaled = _.memoize((x) =>
-  rotateMatrixCounter(
-    _.map(rorateMatrix(x), (_r, i) => scale(_.get(rorateMatrix(x), i))),
+  rotateCounter(
+    _.map(rorate(x), (_r, i) => scale(_.get(rorate(x), i))),
   ),
 )
 
@@ -36,8 +36,8 @@ const getVariance = _.memoize((x, size) =>
 )
 
 const getCorrection = (x) =>
-  _.map(rorateMatrix(x), (r, i) =>
-    _.map(r, (n) => n - _.get(getMean(rorateMatrix(x)), i)),
+  _.map(rorate(x), (r, i) =>
+    _.map(r, (n) => n - _.get(getMean(rorate(x)), i)),
   )
 
 const getCorrectionSquared = (x) =>
@@ -46,6 +46,6 @@ const getCorrectionSquared = (x) =>
 export const fit = (x) => ({
   shape: getShape(x),
   scaled: getScaled(x),
-  mean: getMean(rorateMatrix(x)),
+  mean: getMean(rorate(x)),
   variance: getVariance(getCorrectionSquared(x), _.size(x)),
 })
