@@ -1,6 +1,6 @@
-import { getStandardScaler } from '../index'
-import { matrix, scaled } from './fixtures'
+import { fit } from '../index'
+import { matrix, output } from './fixtures'
 
-test('getStandardScaler', () => {
-  expect(getStandardScaler(matrix)).toStrictEqual(scaled)
+test('fit', () => {
+  expect(fit(matrix)).toStrictEqual(output)
 })
