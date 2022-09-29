@@ -26,6 +26,8 @@ const getScaled = _.memoize((x) =>
 
 const getMean = _.memoize((x) => _.map(x, (_r, i) => mean(_.get(x, i))))
 
+const getSqrt = (x) => _.map(x, (n) => Math.sqrt(n))
+
 const getVariance = _.memoize((x, size) =>
   _.map(
     _.map(x, (r) => _.sum(r)),
@@ -41,9 +43,15 @@ const getCorrectionSquared = _.memoize((x) =>
   _.map(getCorrection(x), (r) => _.map(r, (n) => n ** 2))
 )
 
-export const fit = _.memoize((x) => ({
+export const transform = _.memoize((x) => ({
   shape: getShape(x),
   scaled: getScaled(x),
   mean: getMean(rorate(x)),
-  variance: getVariance(getCorrectionSquared(x), _.size(x))
+  variance: getVariance(getCorrectionSquared(x), _.size(x)),
+  scale: getSqrt(getVariance(getCorrectionSquared(x), _.size(x)))
 }))
+
+export const inverseTransform = (x) =>
+  _.map(x.scaled, (r) =>
+    _.map(r, (n, i) => _.multiply(n, _.get(x.scale, i)) + _.get(x.mean, i))
+  )

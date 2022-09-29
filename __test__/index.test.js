@@ -1,6 +1,10 @@
-import { fit } from '../index'
-import { matrix, output } from './fixtures'
+import { inverseTransform, transform } from '../index'
+import { matrix, output, matrixInversed } from './fixtures'
 
-test('fit', () => {
+test('transform', () => {
   expect(fit(matrix)).toStrictEqual(output)
+})
+
+test('inverseTransform', () => {
+  expect(inverseTransform(transform(matrix))).toEqual(matrixInversed)
 })
