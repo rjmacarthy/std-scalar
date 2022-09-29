@@ -43,12 +43,13 @@ const getCorrectionSquared = _.memoize((x) =>
   _.map(getCorrection(x), (r) => _.map(r, (n) => n ** 2))
 )
 
-export const transform = _.memoize((x) => ({
+export const transform = _.memoize((x, labels) => ({
   shape: getShape(x),
   scaled: getScaled(x),
   mean: getMean(rorate(x)),
   variance: getVariance(getCorrectionSquared(x), _.size(x)),
-  scale: getSqrt(getVariance(getCorrectionSquared(x), _.size(x)))
+  scale: getSqrt(getVariance(getCorrectionSquared(x), _.size(x))),
+  labels: _.take(labels, _.last(getShape(x)))
 }))
 
 export const inverseTransform = _.memoize((x) =>
