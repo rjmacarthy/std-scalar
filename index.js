@@ -1,13 +1,13 @@
 import _ from 'lodash'
 
-export const mean = _.memoize((ns) => _.sum(ns) / _.size(ns))
+const mean = _.memoize((ns) => _.sum(ns) / _.size(ns))
 
-export const getStandardDeviation = _.memoize((ns) =>
+const getStdDev = _.memoize((ns) =>
   Math.sqrt(mean(_.map(ns, (n) => _.multiply(n - mean(ns), n - mean(ns)))))
 )
 
-export const scale = _.memoize((ns) =>
-  _.map(ns, (n) => _.divide(n - mean(ns), getStandardDeviation(ns)) || 0)
+const scale = _.memoize((ns) =>
+  _.map(ns, (n) => _.divide(n - mean(ns), getStdDev(ns)) || 0)
 )
 
 const rorate = _.memoize((x) =>
